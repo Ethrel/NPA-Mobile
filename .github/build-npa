@@ -1,0 +1,10 @@
+cd ./npa
+npm install
+./bin/version
+npm run npa
+cd ./..
+
+mkdir ./assets
+
+cp ./npa/dist/intel.js ./assets/intel.js
+cp ./npa/dist/intel.css ./assets/intel.css
