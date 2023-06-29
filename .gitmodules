@@ -1,0 +1,3 @@
+[submodule "npa"]
+	path = npa
+	url = https://github.com/anicolao/npa.git
