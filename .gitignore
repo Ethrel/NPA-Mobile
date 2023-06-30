@@ -46,3 +46,4 @@ app.*.map.json
 # Other
 android/app/upload-keystore.jks
 /android/app/src/main/res/*/ic_launcher.png
+/assets
