@@ -47,3 +47,7 @@ app.*.map.json
 android/app/upload-keystore.jks
 /android/app/src/main/res/*/ic_launcher.png
 /assets
+/android/app/encryption_public_key.pem
+/android/app/output.zip
+/android/app/pepk.jar
+/android/app/upload_certificate.pem
