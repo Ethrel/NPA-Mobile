@@ -42,6 +42,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-/upload-keystore.jks
-.vscode
+
+# Other
+android/app/upload-keystore.jks
 /android/app/src/main/res/*/ic_launcher.png
