@@ -1,10 +1,35 @@
-cd ./npa
-npm install
-./bin/version
-npm run npa
-cd ./..
+ASSETS_FOLDER=./assets/
+if ! [[ -d "$ASSETS_FOLDER" ]]; then
+    NPA_OUTPUT=./npa/dist/
+    if ! [[ -d "$NPA_OUTPUT" ]]; then
+        echo "Generating assets..."
+        echo "Building NPA..."
+        cd ./npa
+        
+        NPM_MODULES=./node_modules/
+        if ! [[ -d "$NPM_MODULES" ]]; then
+            echo "NPM Install..."
+            npm install
+            echo "NPM Installed."
+        else
+            echo "NPM is ready..."
+        fi
 
-mkdir ./assets
+        ./bin/version
+        npm run npa
+        cd ./..
+        echo "NPA built."
+    else
+        echo "Not re-building NPA."
+    fi
 
-cp ./npa/dist/intel.js ./assets/intel.js
-cp ./npa/dist/intel.css ./assets/intel.css
+    echo "Gathering assets..."
+
+    mkdir ./assets
+
+    cp ./npa/dist/intel.js ./assets/intel.js
+    cp ./npa/dist/intel.css ./assets/intel.css
+    echo "Assets prepared."
+else
+    echo "Assets are already prepared!"
+fi
