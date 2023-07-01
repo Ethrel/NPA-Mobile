@@ -49,7 +49,7 @@ class NPAWebView {
             if (url.contains("/game/")) {
               debugPrint('Injecting intel!');
               _injectCSS(_npaCSS);
-              _injectJS(_npaJS);
+              await _injectJS(_npaJS);
             }
           },
           onWebResourceError: (WebResourceError error) {
@@ -89,14 +89,20 @@ Page resource error:
   Future _prepareAsyncController() async {
     prefs = await Preferences.getInstance();
 
-    _npaJS = await rootBundle.loadString('assets/intel.js');
-    _npaCSS = await rootBundle.loadString('assets/intel.css');
+    List<String> assets = await Future.wait([
+      rootBundle.loadString('assets/intel.js'),
+      rootBundle.loadString('lib/npam_inject.js'),
+      rootBundle.loadString('assets/intel.css'),
+    ]);
+
+    _npaJS = assets[0] + assets[1];
+    _npaCSS = assets[2];
 
     _controller.loadRequest(Uri.parse(prefs.lastVisitedURI ?? "https://np.ironhelmet.com"));
   }
 
-  void _injectJS(String js) {
-    controller.runJavaScript(js);
+  Future<void> _injectJS(String js) async {
+    await controller.runJavaScript(js);
   }
 
   void _injectCSS(String css) {
