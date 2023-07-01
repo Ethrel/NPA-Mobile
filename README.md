@@ -1,5 +1,5 @@
 # Neptune's Pride Agent Mobile
-A mobile app that simply loads Neptune's Pride (https://np.ironhelmet.com) in a webview and force-injects the client code from Neptune's Pride Agent (https://github.com/anicolao/npa).
+A mobile app that simply loads [Neptune's Pride](https://np.ironhelmet.com) in a webview and force-injects the client code from [Neptune's Pride Agent](https://github.com/anicolao/npa) ([Stable Extension](https://chrome.google.com/webstore/detail/neptunes-pride-agent/gpcdekpemhpdcacfnafnflnlakelfefh) | [Alpha Extension](https://chrome.google.com/webstore/detail/neptunes-pride-agent-%CE%AC%CE%BB%CF%86%CE%B1/ndfajnjbmlanogpddbbjbbcoahhomaba)). Note that the injected code is the latest code that exists on the github, and as such, most closely resembles the alpha edition extension.
 
 This is simply a glue project, glueing the two together.
 
