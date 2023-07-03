@@ -38,7 +38,7 @@ jobs:
             ENCODED_STRING: ${{ secrets.KEYSTORE }}
         run: |
             TMP_KEYSTORE_FILE_PATH="${GITHUB_WORKSPACE}/android/app"
-            echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/upload-keystore.jks}
+            echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/upload-keystore.jks
  
       - name: Build android appbundle
         run: flutter build appbundle
