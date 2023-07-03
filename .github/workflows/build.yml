@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Build release versions
+name: Build/upload release versions
 
 # Controls when the workflow will run
 on:
@@ -39,17 +39,33 @@ jobs:
         run: |
             TMP_KEYSTORE_FILE_PATH="${GITHUB_WORKSPACE}/android/app"
             echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/upload-keystore.jks
- 
+          
       - name: Build android appbundle
-        run: flutter build appbundle
+        run: flutter build appbundle --build-number=${{github.run_number}}
         env:
           SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
           SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
-      
-      - name: Upload
+          
+      - name: Update google play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          packageName: net.ethrel.npa_mobile
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          track: production
+          status: inProgress
+          inAppUpdatePriority: 2
+          userFraction: 0.33
+          mappingFile: build/app/outputs/mapping/release/mapping.txt
+          debugSymbols: build/app/intermediates/merged_native_libs/release/out/lib
+          
+      - name: Downloadable release store
         uses: actions/upload-artifact@v2
         with:
           name: Build Artifacts
-          path: build/app/outputs/bundle/release
+          path: |
+            build/app/outputs/bundle/release
+            build/app/outputs/mapping/release/mapping.txt
+            build/app/intermediates/merged_native_libs/release/out/lib
           retention-days: 1
