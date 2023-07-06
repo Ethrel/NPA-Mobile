@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'npa_webview.dart';
@@ -18,10 +20,25 @@ class _NPAMobileState extends State<NPAMobile> {
     view = NPAWebView();
   }
 
+  void ButtonPress() {}
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: WebViewWidget(controller: view.controller),
+      child: Scaffold(
+        body: WebViewWidget(controller: view.controller),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 50.0),
+          child: FloatingActionButton(
+            onPressed: ButtonPress,
+            mini: true,
+            tooltip: "Quick Actions",
+            backgroundColor: Colors.black.withOpacity(1.0),
+            child: Image.asset("Logo/Logo-192x192.png"),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
+      ),
     );
   }
 }

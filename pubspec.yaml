@@ -24,3 +24,4 @@ flutter:
   assets:
     - assets/
     - lib/npam_inject.js
+    - Logo/Logo-192x192.png
