@@ -9,7 +9,6 @@
             "type": "dart",
             "request": "launch",
             "program": "lib/main.dart",
-            "preLaunchTask": "Build NPA"
         },
         {
             "name": "Flutter",
@@ -17,7 +16,6 @@
             "request": "launch",
             "program": "lib/main.dart",
             "flutterMode": "profile",
-            "preLaunchTask": "Build NPA"
         },
         {
             "name": "Flutter",
@@ -25,7 +23,6 @@
             "request": "launch",
             "program": "lib/main.dart",
             "flutterMode": "release",
-            "preLaunchTask": "Build NPA"
         },
     ]
 }

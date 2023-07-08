@@ -1,5 +1,5 @@
 # Neptune's Pride Agent Mobile
-Awaiting Google Play Review
+[Neptune's Pride Agent Mobile](https://play.google.com/store/apps/details?id=net.ethrel.npa_mobile)
 
 A mobile app that simply loads [Neptune's Pride (NP)](https://np.ironhelmet.com) in a webview and force-injects the client code from [Neptune's Pride Agent (NPA)](https://github.com/anicolao/npa) ([Stable Extension](https://chrome.google.com/webstore/detail/neptunes-pride-agent/gpcdekpemhpdcacfnafnflnlakelfefh) | [Alpha Extension](https://chrome.google.com/webstore/detail/neptunes-pride-agent-%CE%AC%CE%BB%CF%86%CE%B1/ndfajnjbmlanogpddbbjbbcoahhomaba)). Note that the injected code is the latest code that exists on the github, and as such, most closely resembles the alpha edition extension.
 

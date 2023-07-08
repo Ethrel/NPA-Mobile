@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:webview_flutter/webview_flutter.dart';
 // Import for Android features.
 import 'package:webview_flutter_android/webview_flutter_android.dart';
@@ -89,16 +90,22 @@ Page resource error:
   Future _prepareAsyncController() async {
     prefs = await Preferences.getInstance();
 
+    String baseURI = prefs.npaInjectURI;
     List<String> assets = await Future.wait([
-      rootBundle.loadString('assets/intel.js'),
+      _fetchWebAsset(Uri.parse("${baseURI}intel.js")),
       rootBundle.loadString('lib/npam_inject.js'),
-      rootBundle.loadString('assets/intel.css'),
+      _fetchWebAsset(Uri.parse("${baseURI}intel.css")),
     ]);
 
     _npaJS = assets[0] + assets[1];
     _npaCSS = assets[2];
 
-    _controller.loadRequest(Uri.parse(prefs.lastVisitedURI ?? "https://np.ironhelmet.com"));
+    _controller.loadRequest(Uri.parse(prefs.lastVisitedURI));
+  }
+
+  Future<String> _fetchWebAsset(Uri uri) async {
+    http.Response res = await http.get(uri);
+    return res.body;
   }
 
   Future<void> _injectJS(String js) async {
