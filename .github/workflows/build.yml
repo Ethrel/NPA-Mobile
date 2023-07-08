@@ -25,11 +25,6 @@ jobs:
         with:
           submodules: 'true'
       - uses: subosito/flutter-action@v2.10.0
-      
-      - name: Build NPA
-        run: |
-          chmod 0777 $GITHUB_WORKSPACE/.github/build-npa
-          $GITHUB_WORKSPACE/.github/build-npa
 
       - name: Decode Keystore
         env:
