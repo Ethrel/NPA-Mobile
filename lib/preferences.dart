@@ -1,7 +1,9 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum _PreferenceKeys {
-  lastVisitedURI("lastVisitedURI");
+  lastVisitedURI("lastVisitedURI"),
+  npaInjectUri("npaInjectURI"),
+  ;
 
   final String key;
   const _PreferenceKeys(this.key);
@@ -40,6 +42,9 @@ class Preferences {
     _prefs.setString(key.key, value);
   }
 
-  String? get lastVisitedURI => _getString(_PreferenceKeys.lastVisitedURI);
+  String get lastVisitedURI => _getString(_PreferenceKeys.lastVisitedURI) ?? "https://np.ironhelmet.com";
   set lastVisitedURI(String? uri) => _setString(_PreferenceKeys.lastVisitedURI, uri);
+
+  String get npaInjectURI => _getString(_PreferenceKeys.npaInjectUri) ?? "https://bitbucket.org/osrictheknight/iosnpagent/raw/HEAD/";
+  set npaInjectURI(String? uri) => _setString(_PreferenceKeys.npaInjectUri, uri);
 }
