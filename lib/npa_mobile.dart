@@ -1,6 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:neptunes_pride_agent_mobile/bottom_bar_settings.dart';
+import 'package:neptunes_pride_agent_mobile/hideable.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'npa_webview.dart';
 
@@ -13,14 +13,38 @@ class NPAMobile extends StatefulWidget {
 
 class _NPAMobileState extends State<NPAMobile> {
   late final NPAWebView view;
+  final BottomBarSettings barSettings = BottomBarSettings();
+  late final Hideable navBar;
 
   @override
   void initState() {
     super.initState();
     view = NPAWebView();
+
+    navBar = Hideable(
+      child: Wrap(
+        children: <Widget>[
+          BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.blue,
+            fixedColor: Colors.white,
+            unselectedItemColor: Colors.white,
+            items: [
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Settings',
+              ),
+              ...barSettings.getNavItems(),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
-  void ButtonPress() {}
+  void buttonPress() {
+    navBar.isVisible.value = !navBar.isVisible.value;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +52,9 @@ class _NPAMobileState extends State<NPAMobile> {
       child: Scaffold(
         body: WebViewWidget(controller: view.controller),
         floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 50.0),
+          padding: EdgeInsets.only(bottom: navBar.childHeight + 10),
           child: FloatingActionButton(
-            onPressed: ButtonPress,
+            onPressed: buttonPress,
             mini: true,
             tooltip: "Quick Actions",
             backgroundColor: Colors.black.withOpacity(1.0),
@@ -38,6 +62,7 @@ class _NPAMobileState extends State<NPAMobile> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
+        bottomNavigationBar: navBar,
       ),
     );
   }
