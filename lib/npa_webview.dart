@@ -105,7 +105,7 @@ Page resource error:
 
   Future<String> _fetchWebAsset(Uri uri) async {
     http.Response res = await http.get(uri);
-    return res.body;
+    return utf8.decode(res.bodyBytes);
   }
 
   Future<void> _injectJS(String js) async {
