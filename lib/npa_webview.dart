@@ -126,4 +126,20 @@ Page resource error:
       })();
     """);
   }
+
+  void handleHotkey(String hotkey) async {
+    if (hotkey.startsWith("NPAM:")) {
+      switch (hotkey.substring(5)) {
+        case 'refresh':
+          _controller.loadRequest(Uri.parse(await _controller.currentUrl() ?? prefs.lastVisitedURI));
+          break;
+
+        case 'settings':
+          debugPrint("MPAM Settings!");
+          break;
+      }
+    } else {
+      await _controller.runJavaScript("Mousetrap.trigger('$hotkey')");
+    }
+  }
 }

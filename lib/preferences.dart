@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum _PreferenceKeys {
   lastVisitedURI("lastVisitedURI"),
   npaInjectUri("npaInjectURI"),
+  labelsVisible("labelsVisible"),
   ;
 
   final String key;
@@ -42,9 +43,24 @@ class Preferences {
     _prefs.setString(key.key, value);
   }
 
+  bool? _getBool(_PreferenceKeys key) {
+    return _prefs.getBool(key.key);
+  }
+
+  void _setBool(_PreferenceKeys key, bool? value) {
+    if (value == null) {
+      _prefs.remove(key.key);
+      return;
+    }
+    _prefs.setBool(key.key, value);
+  }
+
   String get lastVisitedURI => _getString(_PreferenceKeys.lastVisitedURI) ?? "https://np.ironhelmet.com";
   set lastVisitedURI(String? uri) => _setString(_PreferenceKeys.lastVisitedURI, uri);
 
   String get npaInjectURI => _getString(_PreferenceKeys.npaInjectUri) ?? "https://bitbucket.org/osrictheknight/iosnpagent/raw/HEAD/";
   set npaInjectURI(String? uri) => _setString(_PreferenceKeys.npaInjectUri, uri);
+
+  bool get labelsVisible => _getBool(_PreferenceKeys.labelsVisible) ?? true;
+  set labelsVisible(bool? visible) => _setBool(_PreferenceKeys.labelsVisible, visible);
 }

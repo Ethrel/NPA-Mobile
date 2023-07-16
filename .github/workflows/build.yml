@@ -48,8 +48,8 @@ jobs:
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: production
           status: inProgress
-          inAppUpdatePriority: 2
-          userFraction: 0.33
+          inAppUpdatePriority: 5
+          userFraction: 1.0
           mappingFile: build/app/outputs/mapping/release/mapping.txt
           debugSymbols: build/app/intermediates/merged_native_libs/release/out/lib
           
