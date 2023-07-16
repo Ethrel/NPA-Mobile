@@ -97,6 +97,10 @@ Page resource error:
       _fetchWebAsset(Uri.parse("${baseURI}intel.css")),
     ]);
 
+    const String splitAfter = 'console.log("Neptune\'s Pride Agent injection fini.")}()';
+    int asset0idx = assets[0].indexOf(splitAfter) + splitAfter.length;
+    assets[0] = assets[0].substring(0, asset0idx) + ";NeptunesPride.getHotkeys = function() {var hks={};for(var key of u()) {hks[key] = l(key)}return hks}" + assets[0].substring(asset0idx);
+
     _npaJS = assets[0] + assets[1];
     _npaCSS = assets[2];
 
@@ -125,5 +129,21 @@ Page resource error:
       parent.appendChild(style)
       })();
     """);
+  }
+
+  void handleHotkey(String hotkey) async {
+    if (hotkey.startsWith("NPAM:")) {
+      switch (hotkey.substring(5)) {
+        case 'refresh':
+          _controller.loadRequest(Uri.parse(await _controller.currentUrl() ?? prefs.lastVisitedURI));
+          break;
+
+        case 'settings':
+          debugPrint("MPAM Settings!");
+          break;
+      }
+    } else {
+      await _controller.runJavaScript("Mousetrap.trigger('$hotkey')");
+    }
   }
 }

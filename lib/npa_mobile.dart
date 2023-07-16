@@ -14,47 +14,50 @@ class NPAMobile extends StatefulWidget {
 class _NPAMobileState extends State<NPAMobile> {
   late final NPAWebView view;
   final BottomBarSettings barSettings = BottomBarSettings();
-  late final Hideable navBar;
+  late Hideable navBar;
 
   @override
   void initState() {
     super.initState();
     view = NPAWebView();
-
-    navBar = Hideable(
-      child: Wrap(
-        children: <Widget>[
-          BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.blue,
-            fixedColor: Colors.white,
-            unselectedItemColor: Colors.white,
-            items: [
-              const BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: 'Settings',
-              ),
-              ...barSettings.getNavItems(),
-            ],
-          ),
-        ],
-      ),
-    );
   }
 
-  void buttonPress() {
+  void showHideBar() {
     navBar.isVisible.value = !navBar.isVisible.value;
+  }
+
+  void _handleHotkey(String hotkey, bool hideBar) {
+    view.handleHotkey(hotkey);
+    if (hideBar) showHideBar();
   }
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> navBarItems = barSettings.getNavItems(_handleHotkey);
+    navBar = Hideable(
+        childHeight: barSettings.maxSize,
+        child: Align(
+          alignment: Alignment.center,
+          child: Wrap(
+            spacing: 20,
+            children: [...navBarItems],
+          ),
+        ));
     return SafeArea(
       child: Scaffold(
-        body: WebViewWidget(controller: view.controller),
+        body: Stack(
+          children: [
+            WebViewWidget(controller: view.controller),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: navBar,
+            ),
+          ],
+        ),
         floatingActionButton: Padding(
           padding: EdgeInsets.only(bottom: navBar.childHeight + 10),
           child: FloatingActionButton(
-            onPressed: buttonPress,
+            onPressed: showHideBar,
             mini: true,
             tooltip: "Quick Actions",
             backgroundColor: Colors.black.withOpacity(1.0),
@@ -62,7 +65,7 @@ class _NPAMobileState extends State<NPAMobile> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
-        bottomNavigationBar: navBar,
+        //bottomNavigationBar: navBar,
       ),
     );
   }
