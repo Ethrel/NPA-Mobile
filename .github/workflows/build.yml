@@ -47,7 +47,7 @@ jobs:
           packageName: net.ethrel.npa_mobile
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: production
-          status: inProgress
+          status: completed
           inAppUpdatePriority: 5
           mappingFile: build/app/outputs/mapping/release/mapping.txt
           debugSymbols: build/app/intermediates/merged_native_libs/release/out/lib
