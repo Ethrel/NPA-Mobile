@@ -56,7 +56,7 @@ class BottomBarSettings {
     }
     List<Widget> items = [];
 
-    if (!_buttons.contains(_BarButtonData.settings)) _buttons.insert(0, _BarButtonData.settings);
+    //if (!_buttons.contains(_BarButtonData.settings)) _buttons.insert(0, _BarButtonData.settings);
 
     for (_BarButtonData data in _buttons) {
       Size labelSize = _textSize(data.label, _textStyle);
