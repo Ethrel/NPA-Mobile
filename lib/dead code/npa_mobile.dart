@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:neptunes_pride_agent_mobile/bottom_bar_settings.dart';
-import 'package:neptunes_pride_agent_mobile/widgets/hideable.dart';
+import 'package:neptunes_pride_agent_mobile/dead code/bottom_bar_settings.dart';
+import 'package:neptunes_pride_agent_mobile/dead code/hideable.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'dead code/npa_webview.dart';
+import 'package:neptunes_pride_agent_mobile/dead code/npa_webview.dart';
 
 class NPAMobile extends StatefulWidget {
   const NPAMobile({super.key});
