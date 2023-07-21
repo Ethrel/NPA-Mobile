@@ -1,3 +1,4 @@
+import 'package:event/event.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum _PreferenceKeys {
@@ -77,6 +78,10 @@ class Preferences {
   bool get labelsVisible => _getBool(_PreferenceKeys.labelsVisible) ?? true;
   set labelsVisible(bool? visible) => _setBool(_PreferenceKeys.labelsVisible, visible);
 
+  Event updateQuickAccessHotkeys = Event();
   List<String> get quickAccessHotkeys => _getStringList(_PreferenceKeys.quickAccessHotkeys) ?? ["NPAM Settings", "Open Options", "Refresh", "Colours", "Timebase"];
-  set quickAccessHotkeys(List<String>? keys) => _setStringList(_PreferenceKeys.quickAccessHotkeys, keys);
+  set quickAccessHotkeys(List<String>? keys) {
+    _setStringList(_PreferenceKeys.quickAccessHotkeys, keys);
+    updateQuickAccessHotkeys.broadcast();
+  }
 }
