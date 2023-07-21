@@ -4,12 +4,15 @@ publish_to: 'none'
 version: 1.0.0
 
 environment:
-  sdk: '>=3.0.2 <4.0.0'
+  sdk: '^3.0.6'
 
 dependencies:
+  event: ^2.1.2
+  eventsubscriber: ^2.1.3
   flutter:
     sdk: flutter
   http: ^1.1.0
+  multi_value_listenable_builder: ^0.0.2
   shared_preferences: ^2.1.2
   webview_flutter: ^4.2.2
   webview_flutter_android: ^3.8.0
