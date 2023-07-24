@@ -55,7 +55,7 @@ class _NPAMobileState extends State<NPAMobile> {
           ],
         ),
         floatingActionButton: Padding(
-          padding: EdgeInsets.only(bottom: 50), //navBar.childHeight + 10),
+          padding: const EdgeInsets.only(bottom: 50), //navBar.childHeight + 10),
           child: FloatingActionButton(
             onPressed: showHideBar,
             mini: true,

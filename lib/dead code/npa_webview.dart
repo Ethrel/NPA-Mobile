@@ -1,12 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:neptunes_pride_agent_mobile/hotkey_handler.dart';
-import 'package:neptunes_pride_agent_mobile/main.dart';
-import 'package:neptunes_pride_agent_mobile/typedef/hotkey_data.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 // Import for Android features.
 import 'package:webview_flutter_android/webview_flutter_android.dart';

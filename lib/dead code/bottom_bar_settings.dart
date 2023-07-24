@@ -41,7 +41,7 @@ class BottomBarSettings {
 
   final ValueNotifier<bool> showLabels = ValueNotifier<bool>(true);
 
-  late List<_BarButtonData> _buttons = [];
+  late final List<_BarButtonData> _buttons = [];
 
   static const Color _barCircleColor = Color.fromARGB(255, 25, 28, 65);
   static const Color _iconColor = Colors.white;

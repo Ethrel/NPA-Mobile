@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:neptunes_pride_agent_mobile/widgets/hotkey_bar.dart';
 import 'package:neptunes_pride_agent_mobile/widgets/np_webview.dart';
 
+final Key hotkeyBarKey = GlobalKey(debugLabel: "hotkeyBarKey");
+
 class NPAMobile extends StatelessWidget {
-  const NPAMobile({super.key});
+  final HotkeyBar hotkeyBar = HotkeyBar(key: hotkeyBarKey);
+
+  NPAMobile({super.key});
 
   @override
   Widget build(BuildContext context) {
-    HotkeyBar hotkeyBar = HotkeyBar();
     return SafeArea(
       child: Scaffold(
         body: Stack(

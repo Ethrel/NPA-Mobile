@@ -7,6 +7,8 @@ import 'hotkey_handler.dart';
 late HotkeyHandler hotkeys;
 late Preferences preferences;
 
+final Key npaMobileKey = GlobalKey(debugLabel: "npaMobileKey");
+
 void main() async {
   // pre-run warmup
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +17,7 @@ void main() async {
   hotkeys = HotkeyHandler.getInstance();
   preferences = await Preferences.getInstance();
 
-  runApp(const MaterialApp(
-    home: NPAMobile(),
+  runApp(MaterialApp(
+    home: NPAMobile(key: npaMobileKey),
   ));
 }

@@ -9,7 +9,9 @@ class HotkeyBar extends StatefulWidget {
   bool get isVisible => _isVisible.value;
   set isVisible(bool visible) => _isVisible.value = visible;
 
-  void toggleVisible() => isVisible = !isVisible;
+  void toggleVisible() {
+    isVisible = !isVisible;
+  }
 
   @override
   State<StatefulWidget> createState() => _HotkeyBarState();
@@ -27,6 +29,7 @@ class _HotkeyBarState extends State<HotkeyBar> {
     super.initState();
     widget._isVisible.addListener(() => setState(() {
           isVisible = widget.isVisible;
+          if (isVisible == false) extraIconsHeight = 0.0;
         }));
     hotkeys.addListener(() {
       _buildAllHotkeys();
@@ -36,6 +39,14 @@ class _HotkeyBarState extends State<HotkeyBar> {
       _buildQuickAccessHotkeys();
     });
 
+    _buildAllHotkeys();
+    _buildQuickAccessHotkeys();
+  }
+
+  // Reload hotkey info when Hot Reloading app (Dev stuff)
+  @override
+  void reassemble() {
+    super.reassemble();
     _buildAllHotkeys();
     _buildQuickAccessHotkeys();
   }
@@ -92,7 +103,7 @@ class _HotkeyBarState extends State<HotkeyBar> {
     }
   }
 
-  Widget _buildButton(HotkeyData data, {bool withLabel = false}) {
+  Widget _buildButton(HotkeyData data) {
     return Container(
         decoration: const BoxDecoration(
           color: _circleColor,
@@ -103,7 +114,7 @@ class _HotkeyBarState extends State<HotkeyBar> {
             bool menuStaysVisible = hotkeys.trigger(data);
             widget.isVisible = menuStaysVisible;
           },
-          icon: Icon(hotkeys.getHotkeyIconFromLabel(data.label)),
+          icon: hotkeys.getHotkeyIconFromLabel(data.label),
           color: _iconColor,
         ));
   }

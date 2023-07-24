@@ -11,6 +11,8 @@ import 'package:neptunes_pride_agent_mobile/typedef/channel_message.dart';
 import 'package:neptunes_pride_agent_mobile/typedef/hotkey_data.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+final Key webviewKey = GlobalKey(debugLabel: "webviewKey");
+
 class NPWebview extends StatelessWidget {
   final WebViewController _wvc = WebViewController();
   late NPWebviewController controller;
@@ -20,7 +22,7 @@ class NPWebview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WebViewWidget(controller: _wvc);
+    return WebViewWidget(controller: _wvc, key: webviewKey);
   }
 }
 
