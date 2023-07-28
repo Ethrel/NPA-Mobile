@@ -23,7 +23,11 @@ class HotkeyHandler with ChangeNotifier {
     return _instance!;
   }
 
-  static const Set<String> _ignoreHotkeys = {"Controls", "Reload NPA", "Screenshot"};
+  static const Set<String> _ignoreHotkeys = {
+    "Controls",
+    "Reload NPA",
+    "Screenshot",
+  };
   void setHotkey(HotkeyData hotkey) {
     if (_ignoreHotkeys.contains(hotkey.label)) return;
     _hotkeys[hotkey.label] = hotkey;
@@ -61,6 +65,16 @@ class HotkeyHandler with ChangeNotifier {
 
   static const Set<String> notCloseMenu = {
     "Timebase",
+    "- Territory Brightness",
+    "+ Territory Brightness",
+    "Time Machine: -24 ticks",
+    "Time Machine: +24 ticks",
+    "Time Machine: Back",
+    "Time Machine: Forward",
+    "- Rulers",
+    "+ Rulers",
+    "- Handicap",
+    "+ Handicap",
   };
   static const Widget unknownIcon = Icon(Icons.question_mark);
   static final Map<String, Widget> _hotkeyIcons = {
