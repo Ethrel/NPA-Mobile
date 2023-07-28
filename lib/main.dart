@@ -18,6 +18,7 @@ void main() async {
   preferences = await Preferences.getInstance();
 
   runApp(MaterialApp(
+    theme: ThemeData.dark(),
     home: NPAMobile(key: npaMobileKey),
   ));
 }

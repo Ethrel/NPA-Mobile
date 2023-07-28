@@ -37,6 +37,7 @@ class _HotkeyBarState extends State<HotkeyBar> {
     });
     preferences.updateQuickAccessHotkeys.subscribe((args) {
       _buildQuickAccessHotkeys();
+      _buildAllHotkeys();
     });
 
     _buildAllHotkeys();
@@ -62,15 +63,19 @@ class _HotkeyBarState extends State<HotkeyBar> {
     }
   }
 
+  ValueNotifier<bool> _hotkeyWatch = ValueNotifier(true);
   final List<Widget> _allHotkeyButtons = [];
   void _buildAllHotkeys() {
     _allHotkeyButtons.clear();
     for (HotkeyData hotkey in hotkeys.hotkeys) {
       if (preferences.quickAccessHotkeys.contains(hotkey.label)) continue;
-      _allHotkeyButtons.add(_buildButton(hotkey));
+      _allHotkeyButtons.add(_buildButton(hotkey, showLabel: true));
     }
     setState(() {
-      maxExtraHeight = (_allHotkeyButtons.length / 10) * 55;
+      bool _updateHeight = extraIconsHeight == maxExtraHeight;
+      maxExtraHeight = (_allHotkeyButtons.length / 10.0).ceil() * 80;
+      if (_updateHeight) extraIconsHeight = maxExtraHeight;
+      _hotkeyWatch.value = !_hotkeyWatch.value;
     });
   }
 
@@ -103,20 +108,45 @@ class _HotkeyBarState extends State<HotkeyBar> {
     }
   }
 
-  Widget _buildButton(HotkeyData data) {
-    return Container(
+  Widget _buildButton(HotkeyData data, {bool showLabel = false}) {
+    Widget hkIco = hotkeys.getHotkeyIconFromData(data);
+    Widget icon = Container(
+        width: 50,
+        height: 50,
         decoration: const BoxDecoration(
           color: _circleColor,
           shape: BoxShape.circle,
         ),
-        child: IconButton(
-          onPressed: () {
-            bool menuStaysVisible = hotkeys.trigger(data);
-            widget.isVisible = menuStaysVisible;
-          },
-          icon: hotkeys.getHotkeyIconFromLabel(data.label),
-          color: _iconColor,
-        ));
+        child: Draggable(
+            data: data,
+            feedback: hkIco,
+            onDragCompleted: () {
+              debugPrint("Dragged hotkey ${data.label}");
+            },
+            child: IconButton(
+              onPressed: () {
+                bool menuStaysVisible = hotkeys.trigger(data);
+                widget.isVisible = menuStaysVisible;
+              },
+              icon: hkIco,
+              color: _iconColor,
+            )));
+    if (showLabel) {
+      return Column(
+        children: [
+          icon,
+          Text(
+            data.label,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: _iconColor,
+              backgroundColor: _circleColor,
+            ),
+          ),
+        ],
+      );
+    }
+    return icon;
   }
 
   @override
@@ -145,16 +175,54 @@ class _HotkeyBarState extends State<HotkeyBar> {
           AnimatedContainer(
             duration: duration,
             height: extraIconsHeight,
-            child: GridView(
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: iconsPerRow, mainAxisExtent: 50),
-              children: _allHotkeyButtons,
+            child: DragTarget(
+              builder: (context, candidateData, rejectedData) => ValueListenableBuilder(
+                valueListenable: _hotkeyWatch,
+                builder: (context, value, child) {
+                  return GridView(
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: iconsPerRow, mainAxisExtent: 80),
+                    children: _allHotkeyButtons,
+                  );
+                },
+              ),
+              onWillAccept: (rawData) {
+                HotkeyData? hotkey = rawData as HotkeyData?;
+                if (hotkey == null) return false;
+                if (!preferences.quickAccessHotkeys.contains(hotkey.label)) return false;
+                debugPrint("Would accept ${hotkey.label}");
+                return true;
+              },
+              onAccept: (HotkeyData hotkey) {
+                debugPrint("Accepting ${hotkey.label}");
+                preferences.quickAccessHotkeys = preferences.quickAccessHotkeys..remove(hotkey.label);
+                _buildQuickAccessHotkeys();
+                _buildAllHotkeys();
+                setState(() {});
+              },
             ),
           ),
-          Wrap(
-            spacing: 5,
-            alignment: WrapAlignment.spaceEvenly,
-            children: _quickAccessHotkeys,
+          DragTarget(
+            builder: (context, candidateData, rejectedData) {
+              return Wrap(
+                spacing: 5,
+                alignment: WrapAlignment.spaceEvenly,
+                children: _quickAccessHotkeys,
+              );
+            },
+            onWillAccept: (rawData) {
+              HotkeyData? hotkey = rawData as HotkeyData?;
+              if (hotkey == null) return false;
+              if (preferences.quickAccessHotkeys.contains(hotkey.label)) return false;
+              debugPrint("Would accept ${hotkey.label}");
+              return true;
+            },
+            onAccept: (HotkeyData hotkey) {
+              debugPrint("Accepting ${hotkey.label}");
+              preferences.quickAccessHotkeys = preferences.quickAccessHotkeys..add(hotkey.label);
+              _buildQuickAccessHotkeys();
+              _buildAllHotkeys();
+            },
           ),
         ],
       ),
