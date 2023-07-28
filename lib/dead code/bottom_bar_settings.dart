@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:neptunes_pride_agent_mobile/preferences.dart';
+import 'package:neptunes_pride_agent_mobile/typedef/hotkey_data.dart';
 
 enum _BarButtonData {
   refresh("Refresh", Icons.refresh, "NPAM:refresh", true),
@@ -18,9 +18,11 @@ enum _BarButtonData {
   final bool closeMenu;
 }
 
-typedef onClickCallback = void Function(String label, bool hideBar);
+typedef OnClickCallback = void Function(String label, bool hideBar);
 
 class BottomBarSettings {
+  late Map<String, HotkeyData> hotkeys;
+
   BottomBarSettings() {
     init();
   }
@@ -30,18 +32,16 @@ class BottomBarSettings {
     showLabels.value = prefs.labelsVisible;
   }
 
+  void injectHotkeyData(List<Map<String, dynamic>> hotkeyData) {
+    for (Map<String, dynamic> hotkey in hotkeyData) {
+      HotkeyData data = HotkeyData.fromJson(hotkey);
+      hotkeys[data.label] = data;
+    }
+  }
+
   final ValueNotifier<bool> showLabels = ValueNotifier<bool>(true);
 
-  late List<_BarButtonData> _buttons = [];
-
-  void _getButtonData() {
-    _buttons = [
-      _BarButtonData.npasettings,
-      _BarButtonData.refresh,
-      _BarButtonData.colours,
-      _BarButtonData.timebase,
-    ];
-  }
+  late final List<_BarButtonData> _buttons = [];
 
   static const Color _barCircleColor = Color.fromARGB(255, 25, 28, 65);
   static const Color _iconColor = Colors.white;
@@ -50,11 +50,13 @@ class BottomBarSettings {
   double _maxSize = 0.0;
   double get maxSize => _maxSize;
 
-  List<Widget> getNavItems(onClickCallback onClick) {
-    if (_buttons.isEmpty) {
-      _getButtonData();
-    }
+  List<Widget> getNavItems(OnClickCallback onClick) {
     List<Widget> items = [];
+
+    if (_buttons.isEmpty) {
+      items.add(const CircularProgressIndicator());
+      return items;
+    }
 
     //if (!_buttons.contains(_BarButtonData.settings)) _buttons.insert(0, _BarButtonData.settings);
 
