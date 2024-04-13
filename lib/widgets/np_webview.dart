@@ -15,7 +15,7 @@ final Key webviewKey = GlobalKey(debugLabel: "webviewKey");
 
 class NPWebview extends StatelessWidget {
   final WebViewController _wvc = WebViewController();
-  late NPWebviewController controller;
+  late final NPWebviewController controller;
   NPWebview({super.key}) {
     controller = NPWebviewController(_wvc);
   }

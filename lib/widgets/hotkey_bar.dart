@@ -63,7 +63,7 @@ class _HotkeyBarState extends State<HotkeyBar> {
     }
   }
 
-  ValueNotifier<bool> _hotkeyWatch = ValueNotifier(true);
+  final ValueNotifier<bool> _hotkeyWatch = ValueNotifier(true);
   final List<Widget> _allHotkeyButtons = [];
   void _buildAllHotkeys() {
     _allHotkeyButtons.clear();
@@ -72,9 +72,9 @@ class _HotkeyBarState extends State<HotkeyBar> {
       _allHotkeyButtons.add(_buildButton(hotkey, showLabel: true));
     }
     setState(() {
-      bool _updateHeight = extraIconsHeight == maxExtraHeight;
+      bool updateHeight = extraIconsHeight == maxExtraHeight;
       maxExtraHeight = (_allHotkeyButtons.length / 10.0).ceil() * 80;
-      if (_updateHeight) extraIconsHeight = maxExtraHeight;
+      if (updateHeight) extraIconsHeight = maxExtraHeight;
       _hotkeyWatch.value = !_hotkeyWatch.value;
     });
   }
@@ -186,16 +186,16 @@ class _HotkeyBarState extends State<HotkeyBar> {
                   );
                 },
               ),
-              onWillAccept: (rawData) {
+              onWillAcceptWithDetails: (rawData) {
                 HotkeyData? hotkey = rawData as HotkeyData?;
                 if (hotkey == null) return false;
                 if (!preferences.quickAccessHotkeys.contains(hotkey.label)) return false;
                 debugPrint("Would accept ${hotkey.label}");
                 return true;
               },
-              onAccept: (HotkeyData hotkey) {
-                debugPrint("Accepting ${hotkey.label}");
-                preferences.quickAccessHotkeys = preferences.quickAccessHotkeys..remove(hotkey.label);
+              onAcceptWithDetails: (DragTargetDetails<HotkeyData> hotkey) {
+                debugPrint("Accepting ${hotkey.data.label}");
+                preferences.quickAccessHotkeys = preferences.quickAccessHotkeys..remove(hotkey.data.label);
                 _buildQuickAccessHotkeys();
                 _buildAllHotkeys();
                 setState(() {});
@@ -210,16 +210,16 @@ class _HotkeyBarState extends State<HotkeyBar> {
                 children: _quickAccessHotkeys,
               );
             },
-            onWillAccept: (rawData) {
+            onWillAcceptWithDetails: (rawData) {
               HotkeyData? hotkey = rawData as HotkeyData?;
               if (hotkey == null) return false;
               if (preferences.quickAccessHotkeys.contains(hotkey.label)) return false;
               debugPrint("Would accept ${hotkey.label}");
               return true;
             },
-            onAccept: (HotkeyData hotkey) {
-              debugPrint("Accepting ${hotkey.label}");
-              preferences.quickAccessHotkeys = preferences.quickAccessHotkeys..add(hotkey.label);
+            onAcceptWithDetails: (DragTargetDetails<HotkeyData> hotkey) {
+              debugPrint("Accepting ${hotkey.data.label}");
+              preferences.quickAccessHotkeys = preferences.quickAccessHotkeys..add(hotkey.data.label);
               _buildQuickAccessHotkeys();
               _buildAllHotkeys();
             },
