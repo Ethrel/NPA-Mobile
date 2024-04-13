@@ -15,3 +15,6 @@ Mobile browser offerings seem to generally not allow extensions, or some require
 
 # NOTE
 This project was created solely for my own use. PRs and bus reports are welcome, though I don't plan on providing any major level of support. For the most part, this project is provided as-is.
+
+# Account Data
+To see more information about account data, see [The Account Deletion Page](https://ethrel.github.io/NPA-Mobile/pages/Account%20Deletion.md)
