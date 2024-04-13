@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:neptunes_pride_agent_mobile/bottom_bar_settings.dart';
-import 'package:neptunes_pride_agent_mobile/hideable.dart';
+import 'package:neptunes_pride_agent_mobile/dead code/bottom_bar_settings.dart';
+import 'package:neptunes_pride_agent_mobile/dead code/hideable.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'npa_webview.dart';
+import 'package:neptunes_pride_agent_mobile/dead code/npa_webview.dart';
 
 class NPAMobile extends StatefulWidget {
   const NPAMobile({super.key});
@@ -23,11 +23,11 @@ class _NPAMobileState extends State<NPAMobile> {
   }
 
   void showHideBar() {
-    navBar.isVisible.value = !navBar.isVisible.value;
+    //navBar.isVisible = !navBar.isVisible;
   }
 
   void _handleHotkey(String hotkey, bool hideBar) {
-    view.handleHotkey(hotkey);
+    //view.handleHotkey(hotkey);
     if (hideBar) showHideBar();
   }
 
@@ -55,7 +55,7 @@ class _NPAMobileState extends State<NPAMobile> {
           ],
         ),
         floatingActionButton: Padding(
-          padding: EdgeInsets.only(bottom: navBar.childHeight + 10),
+          padding: const EdgeInsets.only(bottom: 50), //navBar.childHeight + 10),
           child: FloatingActionButton(
             onPressed: showHideBar,
             mini: true,
@@ -64,7 +64,7 @@ class _NPAMobileState extends State<NPAMobile> {
             child: Image.asset("Logo/Logo-192x192.png"),
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
         //bottomNavigationBar: navBar,
       ),
     );
