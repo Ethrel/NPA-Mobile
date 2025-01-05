@@ -53,7 +53,7 @@ jobs:
           debugSymbols: build/app/intermediates/merged_native_libs/release/out/lib
           
       - name: Downloadable release store
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4.5.0
         with:
           name: Build Artifacts
           path: |
