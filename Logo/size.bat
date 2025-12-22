@@ -8,3 +8,6 @@ mv Logo-144x144.png ../android/app/src/main/res/mipmap-xxhdpi/logo.png
 mv Logo-96x96.png ../android/app/src/main/res/mipmap-xhdpi/logo.png
 mv Logo-72x72.png ../android/app/src/main/res/mipmap-hdpi/logo.png
 mv Logo-48x48.png ../android/app/src/main/res/mipmap-mdpi/logo.png
+rmdir ..\mipmap
+mkdir ..\mipmap
+cp Logo-192x192.png ../mipmap/ic_launcher.png
