@@ -54,8 +54,6 @@ jobs:
           track: production
           status: completed
           inAppUpdatePriority: 5
-          mappingFile: build/app/outputs/mapping/release/mapping.txt
-          debugSymbols: build/app/intermediates/merged_native_libs/release/out/lib
           
       - name: Downloadable release store
         uses: actions/upload-artifact@v4.5.0
