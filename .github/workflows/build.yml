@@ -37,9 +37,6 @@ jobs:
         run: |
             TMP_KEYSTORE_FILE_PATH="${GITHUB_WORKSPACE}/android/app"
             echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/upload-keystore.jks
-      
-      - name: Build android APK
-        run: flutter build apk
 
       - name: Build android appbundle
         run: flutter build appbundle --build-number=${{github.run_number}}
