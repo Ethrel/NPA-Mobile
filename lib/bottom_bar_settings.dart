@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:neptunes_pride_agent_mobile/preferences.dart';
 
@@ -18,7 +17,7 @@ enum _BarButtonData {
   final bool closeMenu;
 }
 
-typedef onClickCallback = void Function(String label, bool hideBar);
+typedef OnClickCallback = void Function(String label, bool hideBar);
 
 class BottomBarSettings {
   BottomBarSettings() {
@@ -50,7 +49,7 @@ class BottomBarSettings {
   double _maxSize = 0.0;
   double get maxSize => _maxSize;
 
-  List<Widget> getNavItems(onClickCallback onClick) {
+  List<Widget> getNavItems(OnClickCallback onClick) {
     if (_buttons.isEmpty) {
       _getButtonData();
     }
