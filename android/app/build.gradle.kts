@@ -29,7 +29,7 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         ndk {
-            debugSymbolLevel = 'FULL'
+            debugSymbolLevel = "FULL"
         }
     }
     signingConfigs {
