@@ -24,7 +24,12 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: 'true'
-      - uses: subosito/flutter-action@v2.10.0
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
 
       - name: Decode Keystore
         env:
@@ -32,7 +37,10 @@ jobs:
         run: |
             TMP_KEYSTORE_FILE_PATH="${GITHUB_WORKSPACE}/android/app"
             echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/upload-keystore.jks
-          
+      
+      - name: Build android APK
+        run: flutter build apk
+
       - name: Build android appbundle
         run: flutter build appbundle --build-number=${{github.run_number}}
         env:
@@ -60,4 +68,4 @@ jobs:
             build/app/outputs/bundle/release
             build/app/outputs/mapping/release/mapping.txt
             build/app/intermediates/merged_native_libs/release/out/lib
-          retention-days: 1
+          retention-days: 7
