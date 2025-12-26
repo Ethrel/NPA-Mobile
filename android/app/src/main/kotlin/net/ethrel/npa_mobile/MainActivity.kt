@@ -1,4 +1,4 @@
-package net.ethrel.neptunes_pride_agent_mobile
+package net.ethrel.npa_mobile
 
 import io.flutter.embedding.android.FlutterActivity
 
