@@ -137,6 +137,12 @@ Page resource error:
         case 'settings':
           debugPrint("MPAM Settings!");
           break;
+
+        /*
+        case 'showlabel':
+          prefs.labelsVisible = !prefs.labelsVisible;
+          break;
+        */
       }
     } else {
       await _controller.runJavaScript("Mousetrap.trigger('$hotkey')");

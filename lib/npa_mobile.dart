@@ -33,19 +33,19 @@ class _NPAMobileState extends State<NPAMobile> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> navBarItems = barSettings.getNavItems(_handleHotkey);
+    List<Widget> navBarItems = barSettings.getNavItems(_handleHotkey, context);
     navBar = Hideable(
         childHeight: barSettings.maxSize,
         child: Align(
           alignment: Alignment.center,
           child: Wrap(
-            spacing: 20,
+            spacing: barSettings.spacingSize,
             children: [...navBarItems],
           ),
         ));
     return //SafeArea(
-      /*child: */Scaffold(
-        body: Stack(
+        /*child: */ Scaffold(
+      body: Stack(
           children: [
             WebViewWidget(controller: view.controller),
             Align(
