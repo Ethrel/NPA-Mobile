@@ -28,7 +28,7 @@ class NPAMobile extends StatelessWidget {
             onPressed: hotkeyBar.toggleVisible,
             mini: true,
             tooltip: "Quick Actions",
-            backgroundColor: Colors.black.withOpacity(1.0),
+            backgroundColor: Colors.black.withValues(alpha: 1.0),
             child: Image.asset("Logo/Logo-192x192.png"),
           ),
         ),

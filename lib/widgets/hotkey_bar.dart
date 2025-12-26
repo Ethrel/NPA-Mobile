@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:neptunes_pride_agent_mobile/main.dart';
+import 'package:neptunes_pride_agent_mobile/hotkey_handler.dart';
+import 'package:neptunes_pride_agent_mobile/preferences.dart';
 import 'package:neptunes_pride_agent_mobile/typedef/hotkey_data.dart';
 
 class HotkeyBar extends StatefulWidget {
@@ -23,6 +24,8 @@ class _HotkeyBarState extends State<HotkeyBar> {
 
   bool isVisible = false;
   Duration duration = const Duration(milliseconds: 50);
+  HotkeyHandler hotkeys = HotkeyHandler.getInstance();
+  late Preferences preferences;
 
   @override
   void initState() {

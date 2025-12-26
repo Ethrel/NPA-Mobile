@@ -6,7 +6,7 @@ import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:neptunes_pride_agent_mobile/hotkey_handler.dart';
-import 'package:neptunes_pride_agent_mobile/main.dart';
+import 'package:neptunes_pride_agent_mobile/preferences.dart';
 import 'package:neptunes_pride_agent_mobile/typedef/channel_message.dart';
 import 'package:neptunes_pride_agent_mobile/typedef/hotkey_data.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -29,6 +29,9 @@ class NPWebview extends StatelessWidget {
 class NPWebviewController {
   final WebViewController _controller;
   Event<ChannelMessage> channelRecv = Event<ChannelMessage>();
+  final HotkeyHandler hotkeys = HotkeyHandler.getInstance();
+  
+  late Preferences preferences;
 
   final injections = {
     "js": [],
@@ -48,7 +51,6 @@ class NPWebviewController {
       onPageFinished: _onPageFinished,
     ));
     channelRecv.subscribe((args) {
-      if (args == null) return;
       Map<String, dynamic> jsonWrapper = json.decode(args.message);
       switch (jsonWrapper['type']) {
         case 'string':
@@ -72,7 +74,6 @@ class NPWebviewController {
     });
 
     HotkeyHandler.triggerHotkey.subscribe((args) {
-      if (args == null) return;
       if (args.hotkey.startsWith("NPAM:")) {
         switch (args.hotkey.substring(5).toUpperCase()) {
           case "REFRESH":
@@ -92,6 +93,8 @@ class NPWebviewController {
   }
 
   Future<void> _init() async {
+    preferences = await Preferences.getInstance();
+
     debugPrint("Running async init...");
 
     // Load injections
