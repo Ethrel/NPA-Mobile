@@ -43,8 +43,8 @@ class _NPAMobileState extends State<NPAMobile> {
             children: [...navBarItems],
           ),
         ));
-    return SafeArea(
-      child: Scaffold(
+    return //SafeArea(
+      /*child: */Scaffold(
         body: Stack(
           children: [
             WebViewWidget(controller: view.controller),
@@ -66,7 +66,7 @@ class _NPAMobileState extends State<NPAMobile> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
         //bottomNavigationBar: navBar,
-      ),
-    );
+      );//,
+    //);
   }
 }
