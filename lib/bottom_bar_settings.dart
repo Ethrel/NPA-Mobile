@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:neptunes_pride_agent_mobile/preferences.dart';
 
 enum _BarButtonData {
-  refresh("Refresh", Icons.refresh, "NPAM:refresh", true),
-  colours("Colours", Icons.palette, "ctrl+a", true),
-  timebase("Timebase", Icons.schedule, "%", false),
+  refresh("  Refresh  ", Icons.refresh, "NPAM:refresh", true),
+  colours("  Colours  ", Icons.palette, "ctrl+a", true),
+  timebase("  Timebase  ", Icons.schedule, "%", false),
   //settings("Settings", Icons.settings, "NPAM:settings", true),
-  npasettings("NPA Options", Icons.settings_applications, "ctrl+`", true),
+  npasettings("  NPA Options  ", Icons.settings_applications, "ctrl+`", true),
+  //npamlabels("  Show button Labels  ", Icons.label, "NPAM:showlabel", true),
   ;
 
   const _BarButtonData(this.label, this.iconData, this.hotkey, this.closeMenu);
@@ -39,6 +40,7 @@ class BottomBarSettings {
       _BarButtonData.refresh,
       _BarButtonData.colours,
       _BarButtonData.timebase,
+      //_BarButtonData.npamlabels,
     ];
   }
 
@@ -49,7 +51,10 @@ class BottomBarSettings {
   double _maxSize = 0.0;
   double get maxSize => _maxSize;
 
-  List<Widget> getNavItems(OnClickCallback onClick) {
+  double _spacingSize = 5.0;
+  double get spacingSize => _spacingSize;
+
+  List<Widget> getNavItems(OnClickCallback onClick, BuildContext context) {
     if (_buttons.isEmpty) {
       _getButtonData();
     }
@@ -57,10 +62,10 @@ class BottomBarSettings {
 
     //if (!_buttons.contains(_BarButtonData.settings)) _buttons.insert(0, _BarButtonData.settings);
 
-    for (_BarButtonData data in _buttons) {
-      Size labelSize = _textSize(data.label, _textStyle);
-      if (labelSize.width > _maxSize) _maxSize = labelSize.width;
-    }
+    double width = MediaQuery.sizeOf(context).width;
+    //todo: How do I deal with a dynamic margin size? Maybe?
+    width = (width - ((_buttons.length + 1) * _spacingSize)) / _buttons.length;
+    _maxSize = width;
 
     for (_BarButtonData data in _buttons) {
       items.add(
@@ -79,15 +84,21 @@ class BottomBarSettings {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        data.iconData,
-                        color: _iconColor,
+                      FittedBox(
+                          fit: BoxFit.contain,
+                        child: Icon(
+                          data.iconData,
+                          color: _iconColor,
+                        ),
                       ),
                       if (value)
-                        Text(
-                          data.label,
-                          style: _textStyle,
-                        ),
+                        FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text(
+                            data.label,
+                            style: _textStyle,
+                          ),
+                        )
                     ],
                   );
                 }),
