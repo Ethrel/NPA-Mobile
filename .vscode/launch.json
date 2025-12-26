@@ -5,20 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Flutter",
+            "name": "Flutter Debug",
             "type": "dart",
             "request": "launch",
             "program": "lib/main.dart",
         },
         {
-            "name": "Flutter",
+            "name": "Flutter Profile",
             "type": "dart",
             "request": "launch",
             "program": "lib/main.dart",
             "flutterMode": "profile",
         },
         {
-            "name": "Flutter",
+            "name": "Flutter Release",
             "type": "dart",
             "request": "launch",
             "program": "lib/main.dart",
