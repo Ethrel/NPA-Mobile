@@ -44,7 +44,15 @@ jobs:
           SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
           SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
-          
+
+      - name: Downloadable release store
+        uses: actions/upload-artifact@v4.5.0
+        with:
+          name: Build Artifacts
+          path: |
+            build/app/intermediates/merged_native_libs/release/out/lib
+          retention-days: 7
+
       - name: Update google play
         uses: r0adkll/upload-google-play@v1
         with:
