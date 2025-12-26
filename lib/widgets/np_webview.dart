@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:neptunes_pride_agent_mobile/main.dart';
 import 'package:neptunes_pride_agent_mobile/hotkey_handler.dart';
-import 'package:neptunes_pride_agent_mobile/preferences.dart';
 import 'package:neptunes_pride_agent_mobile/typedef/channel_message.dart';
 import 'package:neptunes_pride_agent_mobile/typedef/hotkey_data.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -30,8 +30,6 @@ class NPWebviewController {
   final WebViewController _controller;
   Event<ChannelMessage> channelRecv = Event<ChannelMessage>();
   final HotkeyHandler hotkeys = HotkeyHandler.getInstance();
-  
-  late Preferences preferences;
 
   final injections = {
     "js": [],
@@ -62,7 +60,7 @@ class NPWebviewController {
           break;
 
         case 'hotkey':
-          debugPrint("Setting hotkey");
+          debugPrint("Got hotkey from NPA (Crux)");
           HotkeyData hotkey = HotkeyData.fromJson(json.decode(jsonWrapper['data']));
           hotkeys.setHotkey(hotkey);
           break;
@@ -93,8 +91,6 @@ class NPWebviewController {
   }
 
   Future<void> _init() async {
-    preferences = await Preferences.getInstance();
-
     debugPrint("Running async init...");
 
     // Load injections

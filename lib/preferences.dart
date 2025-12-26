@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:event/event.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,23 +14,35 @@ enum _PreferenceKeys {
 }
 
 class Preferences {
-  late SharedPreferences _prefs;
+  late SharedPreferencesWithCache _prefs;
   static Preferences? _instance;
 
   Preferences._();
 
   Future _init() async {
-    _prefs = await SharedPreferences.getInstance();
+    debugPrint("Getting SharePref Instance?");
+    _prefs = await SharedPreferencesWithCache.create(
+      cacheOptions: const SharedPreferencesWithCacheOptions(
+          // When an allowlist is included, any keys that aren't included cannot be used.
+          //allowList: <String>{'repeat', 'action'},
+          ),
+    );
+    debugPrint("Got.");
   }
 
   static Future<Preferences> _create() async {
+    debugPrint("Have to create (First grab)");
     Preferences pref = Preferences._();
+    debugPrint("Initializing class...");
     await pref._init();
+    debugPrint("Initialized.");
     return pref;
   }
 
   static Future<Preferences> getInstance() async {
+    debugPrint("Preferences.Instance...");
     _instance ??= await _create();
+    debugPrint("Returning.");
     return _instance as Preferences;
   }
 

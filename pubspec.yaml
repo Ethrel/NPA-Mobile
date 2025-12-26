@@ -27,3 +27,6 @@ flutter:
   assets:
     - lib/npam_inject.js
     - Logo/Logo-192x192.png
+    - icons/time_machine/
+    - icons/ruler/
+    - icons/handicap/
